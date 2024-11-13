@@ -6,7 +6,8 @@ CREATE TABLE FACT_CLIENT (
 	ClientPhone int Not Null,
 	ClientBirthDate date Not Null,
 	ClientBackground boolean Not Null
-	)
+	);
+
 	
 CREATE TABLE FACT_EMPLOYEE (
 	EmpID int PRIMARY KEY,
@@ -15,7 +16,8 @@ CREATE TABLE FACT_EMPLOYEE (
 	EmpEmail varchar(40) Not Null,
 	EmpSSN int Not Null,
 	Foreign Key (CenterID) References FACT_CENTER(CenterID),
-	)
+	);
+
 
 CREATE TABLE FACT_CENTER (
 	CenterID int Primary Key,
@@ -24,23 +26,23 @@ CREATE TABLE FACT_CENTER (
 	CenterCity varchar(30) Not Null,
 	CenterStreet varchar(30) Not Null,
 	CenterPhone int Not Null,
-	)
+	);
+
 
 CREATE TABLE FACT_PET (
 	PetID int Primary Key,
 	PetBirthDate date Not Null,
 	PetName varchar(30) Not Null,
 	Foreign Key CenterID References FACT_CENTER(CenterID),
-	)
+	);
+
 	
 CREATE TABLE FACT_BREED (
 	PetID int Not Null,
 	BreedType varchar(30) Not Null,
 	Primary Key (PetID, BreedType),
 	Foreign Key PetID References FACT_PET(PetID),
-	
-	
-)
+	);
 
 
 CREATE TABLE FACT_DROPSOFF (
@@ -49,7 +51,9 @@ CREATE TABLE FACT_DROPSOFF (
     ClientID SMALLINT,
     FOREIGN KEY(PetID) REFERENCES FACT_PET(PetID),
     FOREIGN KEY(ClientID) REFERENCES FACT_CLIENT(ClientID),
-    PRIMARY KEY(DropsOffDate, PetID, ClientID));
+    PRIMARY KEY(DropsOffDate, PetID, ClientID)
+	);
+
 
 CREATE TABLE FACT_ADOPTS (
 	AdoptionDate date,
@@ -57,12 +61,15 @@ CREATE TABLE FACT_ADOPTS (
     ClientID SMALLINT,
     FOREIGN KEY(PetID) REFERENCES FACT_PET(PetID),
     FOREIGN KEY(ClientID) REFERENCES FACT_CLIENT(ClientID),
-    PRIMARY KEY(AdoptionDate, PetID, ClientID));
-    
+    PRIMARY KEY(AdoptionDate, PetID, ClientID)
+	);
+
+
 CREATE TABLE FACT_MEDHISTORY (
     PetID SMALLINT,
    	MedicalReason VARCHAR(100),
     VistNum SMALLINT,
     FOREIGN KEY(PetID) REFERENCES FACT_PET(PetID),
-    PRIMARY KEY(PetID, MedicalReason, VisitNum));
+    PRIMARY KEY(PetID, MedicalReason, VisitNum)
+	);
     
