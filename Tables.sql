@@ -1,21 +1,20 @@
-
-	
-CREATE TABLE FACT_EMPLOYEE (
-	EmpID int PRIMARY KEY,
-	EmpFN varchar(40) Not Null,
-	EmpLN varchar(40) Not Null,
-	EmpEmail varchar(40) Not Null,
-	EmpSSN int Not Null UNIQUE,
-	Foreign Key (CenterID) References FACT_CENTER(CenterID)
-	);
-
 CREATE TABLE FACT_CENTER (
 	CenterID int Primary Key,
 	CenterName varchar(40) Not Null,
 	CenterState varchar(40) Not Null,
 	CenterCity varchar(30) Not Null,
 	CenterStreet varchar(30) Not Null,
-	CenterPhone int Not Null,
+	CenterPhone Bigint Not Null
+	);
+
+CREATE TABLE FACT_CLIENT (
+	ClientID int PRIMARY KEY,
+	ClientFN varchar(40) Not Null,
+	ClientLN varchar(40) Not Null,
+	ClientEmail varchar(40) Not Null,
+	ClientPhone Bigint Not Null,
+	ClientBirthDate date Not Null,
+	ClientBackground boolean Not Null
 	);
 
 CREATE TABLE FACT_EMPLOYEE (
@@ -24,7 +23,7 @@ CREATE TABLE FACT_EMPLOYEE (
 	EmpLN varchar(40) Not Null,
 	EmpEmail varchar(40) Not Null,
 	EmpSSN int Not Null UNIQUE,
-    CenterID int NOT NULL,
+    	CenterID int NOT NULL,
 	Foreign Key (CenterID) References FACT_CENTER(CenterID)
 	);
 
