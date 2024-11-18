@@ -1,0 +1,36 @@
+#1.	Two table join 
+
+SELECT CenterCity, CenterPhone, CenterState, EmpFN, EmpLN
+FROM FACT_CENTER AS fc, FACT_EMPLOYEE AS fe 
+WHERE fc.CenterID = fe.CenterID
+AND CenterState = "NC";
+
+#2.	Three table join & Text based search query using LIKE with wildcards
+
+SELECT PetName, ClientFN, ClientLN, fa.ClientID
+FROM FACT_CLIENT AS fc, FACT_ADOPTS AS fa, FACT_PET AS fp
+WHERE fc.ClientID = fa.ClientID AND fa.PetID = fp.PetID
+AND PetName LIKE "L%";
+
+#3.	Self join
+
+SELECT *
+FROM FACT_PET AS fp1, FACT_PET AS fp2 
+WHERE fp1.PetID != fp2.PetID
+AND fp1.PetName = fp2.PetName
+AND fp1.PetName LIKE "%ie%";
+
+#4.	Aggregate function using GROUP BY and HAVING
+
+SELECT COUNT(*) AS "Count", BreedType
+FROM FACT_BREED 
+GROUP BY BreedType
+HAVING COUNT(*)> 8;
+
+#5.	Subquery 
+
+SELECT *
+FROM FACT_MEDHISTORY
+WHERE VisitNum = (
+    SELECT MAX(VisitNum) 
+	FROM FACT_MEDHISTORY);
