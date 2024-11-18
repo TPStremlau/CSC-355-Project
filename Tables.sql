@@ -15,6 +15,7 @@ CREATE TABLE FACT_EMPLOYEE (
 	EmpLN varchar(40) Not Null,
 	EmpEmail varchar(40) Not Null,
 	EmpSSN int Not Null,
+	CenterID int Not Null,
 	Foreign Key (CenterID) References FACT_CENTER(CenterID),
 	);
 
