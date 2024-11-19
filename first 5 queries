@@ -1,18 +1,22 @@
-#1.	Two table join 
+#1.	Two table join: selects center city, center phone #, center state, employee FN and employee LN. Useful for 
+# finding a center in your state 
 
 SELECT CenterCity, CenterPhone, CenterState, EmpFN, EmpLN
 FROM FACT_CENTER AS fc, FACT_EMPLOYEE AS fe 
 WHERE fc.CenterID = fe.CenterID
 AND CenterState = "NC";
 
-#2.	Three table join & Text based search query using LIKE with wildcards
+#2.	Three table join & Text based search query using LIKE with wildcards: Selects Pet Name, Client FN, Client LN
+# & client ID where the pet's name starts with L. Useful for finding all the pet's whose name's start with L for example 
+# if pets got vaccinated in alphabetical order then this could be helpful 
 
 SELECT PetName, ClientFN, ClientLN, fa.ClientID
 FROM FACT_CLIENT AS fc, FACT_ADOPTS AS fa, FACT_PET AS fp
 WHERE fc.ClientID = fa.ClientID AND fa.PetID = fp.PetID
 AND PetName LIKE "L%";
 
-#3.	Self join
+#3.	Self join: Selects everything from the Pet table where two different pet's have the same name and the name 
+# contains "ie" in it somewhere. 
 
 SELECT *
 FROM FACT_PET AS fp1, FACT_PET AS fp2 
@@ -20,14 +24,17 @@ WHERE fp1.PetID != fp2.PetID
 AND fp1.PetName = fp2.PetName
 AND fp1.PetName LIKE "%ie%";
 
-#4.	Aggregate function using GROUP BY and HAVING
+#4.	Aggregate function using GROUP BY and HAVING: Selects the Count each type of animal where the count is 
+# more than 8. Could be used to look at what type of animals go through the adoption service the most. 
 
 SELECT COUNT(*) AS "Count", BreedType
 FROM FACT_BREED 
 GROUP BY BreedType
 HAVING COUNT(*)> 8;
 
-#5.	Subquery 
+#5.	Subquery: Select's the petID, Visit number and medical reason for every pet that has the most amount 
+# of visits possible. Looks at the last visits for pets who come in most frequently, could be looking to identify
+trends in this data. 
 
 SELECT *
 FROM FACT_MEDHISTORY
