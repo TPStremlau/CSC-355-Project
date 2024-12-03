@@ -1,0 +1,44 @@
+<?php
+	ini_set ('error_reporting', 1); //Turns on error reporting - remove once everything works.
+	
+	try{
+		require_once('../pdo_connectFP.php'); //Connect to the database
+		$sql = 'SELECT *
+        FROM FACT_PET AS fp1, FACT_PET AS fp2 
+        WHERE fp1.PetID != fp2.PetID
+        AND fp1.PetName = fp2.PetName
+        AND fp1.PetName LIKE "%ie%";';
+		$result = $dbc-> query($sql);
+	} catch (PDOException $e){
+		echo $e->getMessage();
+	}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>FinalProject</title>
+	<meta charset ="utf-8"> 
+</head>
+<body>
+	<h2>Selects everything from the Pet table where two different pet's have the same name and the name contains "ie" in it somewhere. </h2>
+
+	<table>
+		<tr>
+			<th>Center ID</th>
+			<th>Pet Birthdate</th>
+            <th>Pet ID</th>
+            <th>Pet Name</th>
+		</tr>	
+		<?php foreach ($result as $auth) {
+			echo "<tr>";
+			echo "<td>".$auth['CenterID']."</td>";
+			echo "<td>".$auth['PetBirthDate']."</td>";
+            echo "<td>".$auth['PetID']."</td>";
+            echo "<td>".$auth['PetName']."</td>";
+			echo "</tr>";
+		}
+		?>
+	</table>
+    <h1><a href="index.html">GO BACK</a></h1>
+</body>    
+</html>
