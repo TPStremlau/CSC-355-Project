@@ -32,7 +32,7 @@ CREATE PROCEDURE AddClient(
     IN clientBackground BOOLEAN
 )
 BEGIN
-    INSERT INTO FACT_CLIENT (51, ClientFN, ClientLN, ClientEmail, ClientPhone, ClientBirthDate, ClientBackground)
+    INSERT INTO FACT_CLIENT (ClientFN, ClientLN, ClientEmail, ClientPhone, ClientBirthDate, ClientBackground)
     VALUES (clientFN, clientLN, clientEmail, clientPhone, clientBirthDate, clientBackground);
 END$$
 
