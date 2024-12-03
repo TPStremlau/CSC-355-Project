@@ -1,0 +1,45 @@
+<?php
+	ini_set ('error_reporting', 1); //Turns on error reporting - remove once everything works.
+	
+	try{
+		require_once('../pdo_connectFP.php'); //Connect to the database
+		$sql = 'SELECT CenterCity, CenterPhone, CenterState, EmpFN, EmpLN
+        FROM FACT_CENTER AS fc, FACT_EMPLOYEE AS fe 
+        WHERE fc.CenterID = fe.CenterID
+        AND CenterState = "NC";';
+		$result = $dbc-> query($sql);
+	} catch (PDOException $e){
+		echo $e->getMessage();
+	}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>FinalProject</title>
+	<meta charset ="utf-8"> 
+</head>
+<body>
+	<h2>selects center city, center phone #, center state, employee FN and employee LN. Useful for finding a center in your state </h2>
+
+	<table>
+		<tr>
+			<th>Center City</th>
+			<th>CenterPhone</th>
+            <th>Center State</th>
+            <th>Employee First</th>
+            <th>Employee Last</th>
+		</tr>	
+		<?php foreach ($result as $auth) {
+			echo "<tr>";
+			echo "<td>".$auth['CenterCity']."</td>";
+			echo "<td>".$auth['CenterPhone']."</td>";
+            echo "<td>".$auth['CenterState']."</td>";
+            echo "<td>".$auth['EmpFN']."</td>";
+            echo "<td>".$auth['EmpLN']."</td>";
+			echo "</tr>";
+		}
+		?>
+	</table>
+    <h1><a href="index.html">GO BACK</a></h1>
+</body>    
+</html>
