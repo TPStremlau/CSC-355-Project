@@ -1,0 +1,41 @@
+<?php
+	ini_set ('error_reporting', 1); //Turns on error reporting - remove once everything works.
+	
+	try{
+		require_once('../pdo_connectFP.php'); //Connect to the database
+		$sql = 'SELECT PetName, ClientFN, ClientLN, fa.ClientID
+        FROM FACT_CLIENT AS fc, FACT_ADOPTS AS fa, FACT_PET AS fp
+        WHERE fc.ClientID = fa.ClientID AND fa.PetID = fp.PetID
+        AND PetName LIKE "L%";';
+		$result = $dbc-> query($sql);
+	} catch (PDOException $e){
+		echo $e->getMessage();
+	}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>FinalProject</title>
+	<meta charset ="utf-8"> 
+</head>
+<body>
+	<h2>Selects Pet Name, Client FN, Client LN & client ID where the pet's name starts with L. Useful for finding all the pet's whose name's start with L for example if pets got vaccinated in alphabetical order then this could be helpful </h2>
+
+	<table>
+		<tr>
+			<th>Pet Name</th>
+			<th>Client First</th>
+            <th>Client Last</th>
+		</tr>	
+		<?php foreach ($result as $auth) {
+			echo "<tr>";
+			echo "<td>".$auth['PetName']."</td>";
+			echo "<td>".$auth['ClientFN']."</td>";
+            echo "<td>".$auth['ClientLN']."</td>";
+			echo "</tr>";
+		}
+		?>
+	</table>
+    <h1><a href="index.html">GO BACK</a></h1>
+</body>    
+</html>
