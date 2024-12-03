@@ -1,0 +1,83 @@
+<?php
+	ini_set('display_errors', 1);
+//Name: 
+/*This code assumes user input is valid and correct only for demo purposes - it does NOT validate form data.*/
+	if(isset($_GET['submit'])) { //Form was submitted
+        $id = $_GET["id"];
+        $first = $_GET["first"];
+        $last = $_GET["last"];
+        $email = $_GET["email"];
+        $phone = $_GET["phone"];
+        $birthdate = $_GET["birthdate"];
+		$background = $_GET["background"];
+        $idcon = '%'.$id.'%';
+		try{
+			require_once('../pdo_connectFP.php'); //adjust the relative path as necessary to find your connect file
+			$sql = 'CALL AddClient(?, ?, ?, ?, ?, ?, ?);';
+            $sql2 = 'SELECT * FROM FACT_CLIENT WHERE ClientID LIKE ?';
+			$stmt = $dbc->prepare($sql);
+            $stmt->bindParam(1, $id);
+			$stmt->bindParam(2, $first);
+			$stmt->bindParam(3, $last);
+            $stmt->bindParam(4, $email);
+            $stmt->bindParam(5, $phone);
+            $stmt->bindParam(6, $birthdate);
+            $stmt->bindParam(7, $background);
+			$stmt->execute();	
+
+            $stmt2 = $dbc->prepare($sql2);
+            $stmt2->bindParam(1, $idcon);
+            $stmt2->execute();
+
+            $result = $stmt2->fetchAll();
+		} catch (PDOException $e){
+			echo $e->getMessage();
+		}	
+
+		$affected = $stmt->RowCount();
+		if ($affected == 0){
+			echo "Failed to add. Please try again.";
+			exit;
+		}	
+	} //end isset
+	else {
+		echo "<h2>You have reached this page in error</h2>";
+		exit;
+	}
+	
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>FinalProject</title>
+	<meta charset ="utf-8"> 
+</head>
+<body>
+	<h2>New Client Values</h2>
+
+	<table>
+		<tr>
+			<th>ClientID</th>
+			<th>Client First</th>
+            <th>Client Last</th>
+            <th>Client Email</th>
+            <th>Client Phone</th>
+            <th>Client BirthDate</th>
+            <th>Client Background Check</th>
+		</tr>	
+		<?php foreach ($result as $auth) {
+			echo "<tr>";
+			echo "<td>".$auth['ClientID']."</td>";
+            echo "<td>".$auth['ClientFN']."</td>";
+            echo "<td>".$auth['ClientLN']."</td>";
+            echo "<td>".$auth['ClientEmail']."</td>";
+            echo "<td>".$auth['ClientPhone']."</td>";
+            echo "<td>".$auth['ClientBirthDate']."</td>";
+            echo "<td>".$auth['ClientBackground']."</td>";
+			echo "</tr>";
+		}
+		?>
+	</table>
+    <h1><a href="index.html">GO BACK</a></h1>
+</body>    
+</html>
