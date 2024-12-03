@@ -1,0 +1,39 @@
+<?php
+	ini_set ('error_reporting', 1); //Turns on error reporting - remove once everything works.
+	
+	try{
+		require_once('../pdo_connectFP.php'); //Connect to the database
+		$sql = 'SELECT COUNT(*) AS "Count", BreedType
+        FROM FACT_BREED 
+        GROUP BY BreedType
+        HAVING COUNT(*)> 8;';
+		$result = $dbc-> query($sql);
+	} catch (PDOException $e){
+		echo $e->getMessage();
+	}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>FinalProject</title>
+	<meta charset ="utf-8"> 
+</head>
+<body>
+	<h2>Selects the Count each type of animal where the count is more than 8. Could be used to look at what type of animals go through the adoption service the most.</h2>
+
+	<table>
+		<tr>
+			<th>Number of Animal Type</th>
+			<th>Animal Type</th>
+		</tr>	
+		<?php foreach ($result as $auth) {
+			echo "<tr>";
+			echo "<td>".$auth['Count']."</td>";
+			echo "<td>".$auth['BreedType']."</td>";
+			echo "</tr>";
+		}
+		?>
+	</table>
+    <h1><a href="index.html">GO BACK</a></h1>
+</body>    
+</html>
