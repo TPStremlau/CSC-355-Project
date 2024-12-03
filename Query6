@@ -1,0 +1,39 @@
+<?php
+	ini_set ('error_reporting', 1); //Turns on error reporting - remove once everything works.
+	
+	try{
+		require_once('../pdo_connectFP.php'); //Connect to the database
+		$sql = 'SELECT CenterID, CenterName, GetPetCountByCenter(CenterID) AS TotalPets
+        FROM FACT_CENTER;';
+		$result = $dbc-> query($sql);
+	} catch (PDOException $e){
+		echo $e->getMessage();
+	}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>FinalProject</title>
+	<meta charset ="utf-8"> 
+</head>
+<body>
+	<h2>Select's the petID, Visit number and medical reason for every pet that has the most amount of visits possible. Looks at the last visits for pets who come in most frequently, could be looking to identify trends in this data.</h2>
+
+	<table>
+		<tr>
+			<th>Center ID</th>
+			<th>Center Name</th>
+            <th>Center Pet Count</th>
+		</tr>	
+		<?php foreach ($result as $auth) {
+			echo "<tr>";
+			echo "<td>".$auth['CenterID']."</td>";
+			echo "<td>".$auth['CenterName']."</td>";
+            echo "<td>".$auth['TotalPets']."</td>";
+			echo "</tr>";
+		}
+		?>
+	</table>
+    <h1><a href="index.html">GO BACK</a></h1>
+</body>    
+</html>
