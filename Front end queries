@@ -1,0 +1,117 @@
+#In the front end queries at the bottom I substituted the values for ? to make it easier to plug into the front end code.
+
+#Stored Function:
+DELIMITER $$
+
+CREATE FUNCTION GetPetCountByCenter(centerID INT)
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE petCount INT;
+    SELECT COUNT(*) INTO petCount
+    FROM FACT_PET
+    WHERE CenterID = centerID;
+    RETURN petCount;
+END$$
+
+DELIMITER ;
+
+#Called by:
+SELECT CenterID, CenterName, GetPetCountByCenter(CenterID) AS TotalPets
+FROM FACT_CENTER;
+#----------------------------------------------------------------------------------------------------------
+#Stored Procedure:
+DELIMITER $$
+
+CREATE PROCEDURE AddClient(
+    IN clientFN VARCHAR(40),
+    IN clientLN VARCHAR(40),
+    IN clientEmail VARCHAR(40),
+    IN clientPhone BIGINT,
+    IN clientBirthDate DATE,
+    IN clientBackground BOOLEAN
+)
+BEGIN
+    INSERT INTO FACT_CLIENT (51, ClientFN, ClientLN, ClientEmail, ClientPhone, ClientBirthDate, ClientBackground)
+    VALUES (clientFN, clientLN, clientEmail, clientPhone, clientBirthDate, clientBackground);
+END$$
+
+DELIMITER ;
+
+#Called by:
+CALL AddClient('Taylor', 'Smith', 'taylor.smith@example.com', 1234567890, '1995-10-25', TRUE);
+
+SELECT * FROM FACT_CLIENT WHERE ClientEmail = 'taylor.smith@example.com';
+#----------------------------------------------------------------------------------------------------------
+#Trigger: (Check if pet was added to FACT_PET)
+#Create table to keep track of entries
+CREATE TABLE PET_LOG (
+    LogID INT AUTO_INCREMENT PRIMARY KEY,
+    PetID INT NOT NULL,
+    LogMessage VARCHAR(255),
+    LogDate DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+#Create Trigger:
+DELIMITER $$
+
+CREATE TRIGGER AfterPetInsert
+AFTER INSERT ON FACT_PET
+FOR EACH ROW
+BEGIN
+    INSERT INTO PET_LOG (PetID, LogMessage)
+    VALUES (NEW.PetID, CONCAT('New pet added with ID: ', NEW.PetID));
+END$$
+
+DELIMITER ;
+#----------------------------------------------------------------------------------------------------------
+#Front end queries:
+  #1. Display total pets:
+    SELECT CenterID, CenterName, GetPetCountByCenter(CenterID) AS TotalPets
+    FROM FACT_CENTER;
+#----------------------------------------------------------------------------------------------------------
+  #2. Use Stored Procedure:
+    CALL AddClient(?, ?, ?, ?, ?, ?);
+#----------------------------------------------------------------------------------------------------------
+  #3. Check if email matches input email:
+    SELECT * FROM FACT_CLIENT WHERE ClientEmail = ?;
+#----------------------------------------------------------------------------------------------------------
+  #4. List all employees working at center:
+    SELECT EmpID, EmpFN, EmpLN, CenterID
+    FROM FACT_EMPLOYEE
+    WHERE CenterID = ?;
+#----------------------------------------------------------------------------------------------------------
+  .5 List pets at center
+    SELECT PetID, PetName, CenterID
+    FROM FACT_PET
+    WHERE CenterID = ?;
+#----------------------------------------------------------------------------------------------------------
+  #6. Find all breeds of specific pet
+    SELECT BreedType
+    FROM FACT_BREED
+    WHERE PetID = ?;
+
+#----------------------------------------------------------------------------------------------------------
+  #7. Show adoption details
+    SELECT a.AdoptionDate, p.PetName, c.ClientFN, c.ClientLN
+    FROM FACT_ADOPTS a
+    JOIN FACT_PET p ON a.PetID = p.PetID
+    JOIN FACT_CLIENT c ON a.ClientID = c.ClientID;
+
+#----------------------------------------------------------------------------------------------------------
+  #8. Get med history:
+    SELECT MedicalReason, VisitNum
+    FROM FACT_MEDHISTORY
+    WHERE PetID = ?;
+
+#----------------------------------------------------------------------------------------------------------
+  #9. Find Drop Off date
+    SELECT d.DropsOffDate, p.PetName, c.ClientFN, c.ClientLN
+    FROM FACT_DROPSOFF d
+    JOIN FACT_PET p ON d.PetID = p.PetID
+    JOIN FACT_CLIENT c ON d.ClientID = c.ClientID
+    WHERE d.DropsOffDate = ?;
+
+#----------------------------------------------------------------------------------------------------------
+  #10. Show logs of added pets
+    SELECT * FROM PET_LOG;
+#----------------------------------------------------------------------------------------------------------
