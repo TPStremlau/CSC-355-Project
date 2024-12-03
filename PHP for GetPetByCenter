@@ -1,0 +1,47 @@
+<?php
+ini_set('display_errors', 1);
+
+if (isset($_GET['centerID'])) { // Form was submitted
+    $centerID = $_GET['centerID'];
+    try {
+        require_once('../pdo_connect.php'); // Adjust path to your connection file
+        $sql = 'SELECT CenterID, CenterName, GetPetCountByCenter(CenterID) AS TotalPets 
+                FROM FACT_CENTER WHERE CenterID = ?';
+        $stmt = $dbc->prepare($sql);
+        $stmt->bindParam(1, $centerID, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $result = $stmt->fetchAll();
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        exit;
+    }
+} else {
+    echo "<h2>You have reached this page in error.</h2>";
+    exit;
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Pet Count by Center</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <h2> Pet Count by Center </h2>
+    <table border="1">
+        <tr>
+            <th>Center ID</th>
+            <th>Center Name</th>
+            <th>Total Pets</th>
+        </tr>
+        <?php foreach ($result as $row) { ?>
+            <tr>
+                <td><?php echo $row['CenterID']; ?></td>
+                <td><?php echo $row['CenterName']; ?></td>
+                <td><?php echo $row['TotalPets']; ?></td>
+            </tr>
+        <?php } ?>
+    </table>
+</body>
+</html>
