@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--  -->
+<head>
+    <title>Enter User Data</title>
+	<meta charset ="utf-8"> 
+	<style>
+		label {display: block; float:left; width:10%;}
+		input {display: block; width: 20%}
+		#submit {width: 10%; margin-top: 2rem; margin-left: 10%;}
+	</style>
+</head>
+<body>
+	<h2>Enter Client Email. You can use "rsfarrell01@gmail.com" to test</h2>
+	<form method = "get" action = "query8.php">
+		<label for="id">Enter Client Email</label>
+		<input type="text" name = "email" id = "email">
+		<input type="submit" name="submit" value="Submit" id = "submit">
+	</form>
+    <h1><a href="index.html">GO BACK</a></h1>
+	
+</body>
+</html>
