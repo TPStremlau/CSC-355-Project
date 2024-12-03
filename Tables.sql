@@ -8,7 +8,7 @@ CREATE TABLE FACT_CENTER (
 	);
 
 CREATE TABLE FACT_CLIENT (
-	ClientID int PRIMARY KEY,
+	ClientID int PRIMARY KEY AUTO_INCREMENT,
 	ClientFN varchar(40) Not Null,
 	ClientLN varchar(40) Not Null,
 	ClientEmail varchar(40) Not Null,
