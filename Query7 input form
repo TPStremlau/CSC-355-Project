@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--  -->
+<head>
+    <title>Enter User Data</title>
+	<meta charset ="utf-8"> 
+	<style>
+		label {display: block; float:left; width:10%;}
+		input {display: block; width: 20%}
+		#submit {width: 10%; margin-top: 2rem; margin-left: 10%;}
+	</style>
+</head>
+<body>
+	<h2>Enter User Data</h2>
+	<form method = "get" action = "query7.php">
+		<label for="id">Enter User id</label>
+		<input type="text" name = "id" id = "id">
+		<label for="first">Enter User first</label>
+		<input type="text" name = "first" id = "first">
+		<label for="last">Enter User last</label>
+		<input type="text" name = "last" id = "last">
+		<label for="email">Enter User email</label>
+		<input type="text" name = "email" id = "email">
+		<label for="phone">Enter User phone</label>
+		<input type="text" name = "phone" id = "phone">
+		<label for="birthdate">Enter User birthdate</label>
+		<input type="text" name = "birthdate" id = "birthdate">
+		<label for="background">Enter User background</label>
+		<input type="text" name = "background" id = "background">
+		<input type="submit" name="submit" value="Submit" id = "submit">
+	</form>
+	<h1><a href="index.html">GO BACK</a></h1>
+
+	
+</body>
+</html>
