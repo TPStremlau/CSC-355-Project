@@ -1,0 +1,39 @@
+<?php
+ini_set('display_errors', 1);
+
+try {
+    require_once('../pdo_connect.php'); // Adjust path to your connection file
+    $sql = 'SELECT * FROM PET_LOG';
+    $stmt = $dbc->query($sql);
+    $result = $stmt->fetchAll();
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+    exit;
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Pet Logs</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <h2>Pet Logs</h2>
+    <table border="1">
+        <tr>
+            <th>Log ID</th>
+            <th>Pet ID</th>
+            <th>Message</th>
+            <th>Log Date</th>
+        </tr>
+        <?php foreach ($result as $row) { ?>
+            <tr>
+                <td><?php echo $row['LogID']; ?></td>
+                <td><?php echo $row['PetID']; ?></td>
+                <td><?php echo $row['LogMessage']; ?></td>
+                <td><?php echo $row['LogDate']; ?></td>
+            </tr>
+        <?php } ?>
+    </table>
+</body>
+</html>
