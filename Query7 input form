@@ -14,9 +14,9 @@
 	<h2>Enter User Data</h2>
 	<form method = "get" action = "query7.php">
 		<label for="first">Enter User first</label>
-		<input type="text" name = "first" id = "first">
+		<input type="text" name = "firstName" id = "firstName">
 		<label for="last">Enter User last</label>
-		<input type="text" name = "last" id = "last">
+		<input type="text" name = "lastName" id = "lastName">
 		<label for="email">Enter User email</label>
 		<input type="text" name = "email" id = "email">
 		<label for="phone">Enter User phone</label>
