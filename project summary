@@ -1,10 +1,12 @@
 The purpose of our database is to maintain records for a pet adoption system. It keeps track of clients, pets, 
 pet adoption centers, and employees in the system. This system could be used by a pet adoption company with 
-multiple adoption centers. This database allows us to answer questions about things such as which employees 
-work at which centers, the medical history of pets which may affect who wants to adopt them, and client history 
+multiple adoption centers. Our database allows us to answer questions about things such as which employees 
+work at which centers, the medical history of pets which may affect who is eligible to adopt them, and client history 
 to keep track of past adoptions and which pets belong to which customers. For example, if a pet went missing and 
 was brought into a pet adoption center, it could be tracked back to the client who adopted it so the pet could 
 be returned using the clients contact details. It also records things like the clients background information 
-in case they have a history of animal abuse and should not be allowed to adopt pets in the future. Overall, this 
+in case they have a history of animal abuse and should not be allowed to adopt pets in the future. Ethically, this
+database could pose a concern if the medical history of a pet is leaked as this can change the cost of insurance policies.
+For security purposes, storing SSNs can be risky and these would most likely need to be encoded. Overall, this 
 database maintains important information on clients, centers, pets, and employees to ensure the business 
-functions smoothly and important information is easily accessible and up to date. 
+functions smoothly. It also ensures that important information is easily accessible and up to date. 
