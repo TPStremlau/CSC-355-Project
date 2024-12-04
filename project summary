@@ -5,8 +5,10 @@ work at which centers, the medical history of pets which may affect who is eligi
 to keep track of past adoptions and which pets belong to which customers. For example, if a pet went missing and 
 was brought into a pet adoption center, it could be tracked back to the client who adopted it so the pet could 
 be returned using the clients contact details. It also records things like the clients background information 
-in case they have a history of animal abuse and should not be allowed to adopt pets in the future. Ethically, this
-database could pose a concern if the medical history of a pet is leaked as this can change the cost of insurance policies.
-For security purposes, storing SSNs can be risky and these would most likely need to be encoded. Overall, this 
-database maintains important information on clients, centers, pets, and employees to ensure the business 
+in case they have a history of animal abuse and should not be allowed to adopt pets in the future. Some of our queries 
+demonstrate how the database can be used by customers to find a center close to you, finding pets that have the same name, 
+looking at what types of animals are seen most by the centers, and looking and what medical reasons pets are seen for.  
+Ethically, this database could pose a concern if the medical history of a pet is leaked as this can change the cost of 
+insurance policies. For security purposes, storing SSNs can be risky and these would most likely need to be encoded. 
+Overall, this database maintains important information on clients, centers, pets, and employees to ensure the business 
 functions smoothly. It also ensures that important information is easily accessible and up to date. 
