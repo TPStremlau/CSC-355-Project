@@ -13,8 +13,6 @@
 <body>
 	<h2>Enter User Data</h2>
 	<form method = "get" action = "query7.php">
-		<label for="id">Enter User id</label>
-		<input type="text" name = "id" id = "id">
 		<label for="first">Enter User first</label>
 		<input type="text" name = "first" id = "first">
 		<label for="last">Enter User last</label>
