@@ -22,7 +22,7 @@
 		<label for="phone">Enter User phone</label>
 		<input type="text" name = "phone" id = "phone">
 		<label for="birthdate">Enter User birthdate</label>
-		<input type="text" name = "birthdate" id = "birthdate">
+		<input type="text" name = "birthDate" id = "birthDate">
 		<label for="background">Enter User background</label>
 		<input type="text" name = "background" id = "background">
 		<input type="submit" name="submit" value="Submit" id = "submit">
